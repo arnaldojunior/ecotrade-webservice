@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Uf.findAll", query = "SELECT u FROM Uf u"),
-    @NamedQuery(name = "Uf.find", query = "SELECT u FROM Uf u WHERE u.uf = :id OR u.uf = UPPER(:id)")})
+    @NamedQuery(name = "Uf.findById", query = "SELECT u FROM Uf u WHERE u.uf = :id OR u.uf = UPPER(:id)")})
 public class Uf implements Serializable {
     
     @Id

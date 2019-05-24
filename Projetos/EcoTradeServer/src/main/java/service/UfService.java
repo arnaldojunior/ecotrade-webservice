@@ -3,8 +3,8 @@ package service;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,22 +19,24 @@ import model.Uf;
 @Path("/uf")
 public class UfService extends AbstractFacade<Uf> {
     
-    @PersistenceUnit(unitName = "ecoTradePU")
-    private EntityManagerFactory emf;
+    @PersistenceContext(unitName = "ecoTradePU")
+    private EntityManager em;
     
     public UfService() {
         super(Uf.class);
     }
     
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return em;
     }
 
     @GET
     @Path("{id}")
     @Produces("application/json")
     public Uf find (@PathParam("id") String id) {
-        return super.find(id);
+        //return super.find(id);
+        Query q = getEntityManager().createNamedQuery("Uf.findById").setParameter("id", id);
+        return (Uf) q.getSingleResult();
     }
     
     @GET
