@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,19 +39,17 @@ public class Anuncio implements Serializable {
     @JoinColumn(name = "produto_id", referencedColumnName = "id")
     private Produto produto;
     
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "anunciante_id", referencedColumnName = "id")
+    private Usuario anunciante;
+    
+    @Embedded
+    private Endereco endereco;
+    
     @Column(nullable = false)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime quando;
-    
-    @Column(nullable = false)
-    private String logradouro;
-    
-    @Column(nullable = false)
-    private String bairro;
-    
-    @Column(nullable = false, length = 10)
-    private String cep;
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
@@ -82,36 +81,28 @@ public class Anuncio implements Serializable {
         this.produto = produto;
     }
 
+    public Usuario getAnunciante() {
+        return anunciante;
+    }
+
+    public void setAnunciante(Usuario anunciante) {
+        this.anunciante = anunciante;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
     public LocalDateTime getQuando() {
         return quando;
     }
 
     public void setQuando(LocalDateTime quando) {
         this.quando = quando;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
     }
 
     public Categoria getCategoria() {
@@ -177,6 +168,6 @@ public class Anuncio implements Serializable {
 
     @Override
     public String toString() {
-        return "Anuncio{" + "id=" + id + ", produto=" + produto + ", quando=" + quando + ", logradouro=" + logradouro + ", bairro=" + bairro + ", cep=" + cep + ", categoria=" + categoria + ", cidade=" + cidade + ", finalidade=" + finalidade + ", valor=" + valor + '}';
+        return "Anuncio{" + "id=" + id + ", produto=" + produto + ", anunciante=" + anunciante + ", endereco=" + endereco + ", quando=" + quando + ", categoria=" + categoria + ", cidade=" + cidade + ", finalidade=" + finalidade + ", valor=" + valor + '}';
     }
 }

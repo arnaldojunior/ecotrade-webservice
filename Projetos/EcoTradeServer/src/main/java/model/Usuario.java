@@ -2,12 +2,11 @@ package model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,31 +17,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 public class Usuario implements Serializable {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_seq")
     @SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_seq", initialValue = 1, allocationSize = 1)
     private Long id;
     
+    @Column(nullable = false)
     private String nome;
     
+    @Column(length = 11, nullable = false)
     private String cpf;
     
-    private String logradouro;
-    
-    private String bairro;
-    
-    private String cep;
-    
+    @Column(nullable = false)
     private String telefone;
     
+    @Column(nullable = false)
     private String email;
     
+    @Column(nullable = false)
     private String senha;
-    
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "cidade_id", referencedColumnName = "id")
-    private Cidade cidade;
 
     public Long getId() {
         return id;
@@ -67,31 +60,7 @@ public class Usuario implements Serializable {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
+    
     public String getTelefone() {
         return telefone;
     }
@@ -115,15 +84,7 @@ public class Usuario implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public Cidade getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -159,6 +120,6 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", logradouro=" + logradouro + ", bairro=" + bairro + ", cep=" + cep + ", telefone=" + telefone + ", email=" + email + ", senha=" + senha + ", cidade=" + cidade + '}';
-    }    
+        return "Usuario{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone + ", email=" + email + ", senha=" + senha + '}';
+    }
 }
