@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_seq")
-    @SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_seq", initialValue = 2, allocationSize = 1)
     private Long id;
     
     @Column(nullable = false)
