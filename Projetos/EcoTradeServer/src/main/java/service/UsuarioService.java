@@ -36,10 +36,18 @@ public class UsuarioService extends AbstractFacade<Usuario> {
     }
 
     @GET
-    @Path("{id}")
+    @Path("id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario find(@PathParam("id") String id) {
+    public Usuario findById(@PathParam("id") String id) {
         return super.find(Long.valueOf(id));
+    }
+    
+    @GET
+    @Path("email/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usuario findByEmail(@PathParam("email") String email) {
+        return em.createQuery("SELECT u FROM Usuario u WHERE u.email = :email", Usuario.class)
+                .setParameter("email", email).getSingleResult();
     }
 
     @GET
@@ -48,16 +56,15 @@ public class UsuarioService extends AbstractFacade<Usuario> {
     public List<Usuario> findAll() {
         return super.findAll();
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response save(Usuario usuario) {
         try {
-            System.out.println("USUÁRIO: " + usuario.toString());
             em.persist(usuario);
             return Response.status(201).entity(usuario).build();
         } catch (IllegalStateException | SecurityException e) {
-            System.out.println("Erro ao salvar Usuário: "+ e);
             throw new WebApplicationException(500);
         }
     }
