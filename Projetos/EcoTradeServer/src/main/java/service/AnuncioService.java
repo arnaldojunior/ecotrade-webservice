@@ -32,10 +32,18 @@ public class AnuncioService extends AbstractFacade<Anuncio> {
     }
 
     @GET
-    @Path("{id}")
+    @Path("id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Anuncio find(@PathParam("id") String id) {
+    public Anuncio findById(@PathParam("id") String id) {
         return super.find(Long.valueOf(id));
+    }
+    
+    @GET
+    @Path("{categoria}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Anuncio> findByCategoria(@PathParam("categoria") String categoria) {
+        return em.createQuery("SELECT a FROM Anuncio a WHERE LOWER(a.categoria.nome) = ?1", Anuncio.class)
+                .setParameter(1, categoria).getResultList();
     }
     
     @GET
