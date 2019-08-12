@@ -62,7 +62,11 @@ public class UsuarioService extends AbstractFacade<Usuario> {
     @Produces(MediaType.APPLICATION_JSON)
     public Response save(Usuario usuario) {
         try {
-            em.persist(usuario);
+            if (usuario.getId() != null) {
+                em.merge(usuario);
+            } else {
+                em.persist(usuario);
+            }
             return Response.status(201).entity(usuario).build();
         } catch (IllegalStateException | SecurityException e) {
             throw new WebApplicationException(500);
