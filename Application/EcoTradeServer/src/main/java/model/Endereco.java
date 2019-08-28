@@ -18,7 +18,7 @@ public class Endereco implements Serializable {
     @Column(nullable = false)
     private String bairro;
     
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 8)
     private String cep;
     
     private int numero;

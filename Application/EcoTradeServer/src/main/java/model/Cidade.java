@@ -24,7 +24,7 @@ public class Cidade implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cidade_seq")
     @SequenceGenerator(name = "cidade_seq", sequenceName = "cidade_seq", initialValue = 1, allocationSize = 1)
     @Column(nullable = false)
-    private Long id;
+    private String id;
     
     @Column(nullable = false)
     private String nome;
@@ -33,11 +33,11 @@ public class Cidade implements Serializable {
     @JoinColumn(name = "uf_id", referencedColumnName = "uf")
     private Uf uf;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

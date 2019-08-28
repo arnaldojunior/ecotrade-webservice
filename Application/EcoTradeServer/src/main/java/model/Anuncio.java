@@ -17,7 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,17 +30,16 @@ public class Anuncio implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "anuncio_seq")
-    @SequenceGenerator(name = "anuncio_seq", sequenceName = "anuncio_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "anuncio_seq", sequenceName = "anuncio_seq", initialValue = 100, allocationSize = 1)
     @Column(nullable = false)
     private Long id;
     
-    @OneToOne(optional = false)
-    @JoinColumn(name = "produto_id", referencedColumnName = "id")
+    @Embedded
     private Produto produto;
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "anunciante_id", referencedColumnName = "id")
-    private Usuario anunciante;
+    private Usuario usuario;
     
     @Embedded
     private Endereco endereco;
@@ -81,12 +79,12 @@ public class Anuncio implements Serializable {
         this.produto = produto;
     }
 
-    public Usuario getAnunciante() {
-        return anunciante;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setAnunciante(Usuario anunciante) {
-        this.anunciante = anunciante;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Endereco getEndereco() {
@@ -168,6 +166,6 @@ public class Anuncio implements Serializable {
 
     @Override
     public String toString() {
-        return "Anuncio{" + "id=" + id + ", produto=" + produto + ", anunciante=" + anunciante + ", endereco=" + endereco + ", quando=" + quando + ", categoria=" + categoria + ", cidade=" + cidade + ", finalidade=" + finalidade + ", valor=" + valor + '}';
+        return "Anuncio{" + "id=" + id + ", produto=" + produto + ", anunciante=" + usuario + ", endereco=" + endereco + ", quando=" + quando + ", categoria=" + categoria + ", cidade=" + cidade + ", finalidade=" + finalidade + ", valor=" + valor + '}';
     }
 }

@@ -44,4 +44,12 @@ public class CidadeService extends AbstractFacade<Cidade> {
     public List<Cidade> findAll() {
         return super.findAll();
     }
+    
+    @GET
+    @Path("uf/{uf}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Cidade> findByUf(@PathParam("uf") String uf) {
+        return em.createQuery("SELECT c FROM Cidade c WHERE c.uf.uf = ?1", Cidade.class)
+                .setParameter(1, uf).getResultList();
+    }
 }
